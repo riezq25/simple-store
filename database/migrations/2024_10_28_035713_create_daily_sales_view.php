@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('daily_sales_view', function (Blueprint $table) {
             DB::statement("
-            CREATE VIEW sales_today AS
+            CREATE VIEW daily_sales_report AS
             SELECT
                 s.sale_id,
                 s.invoice_number,
