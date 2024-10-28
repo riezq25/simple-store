@@ -18,7 +18,7 @@ return new class extends Migration
                 ->unique();
             $table->string('product_name', 255);
             $table->foreignId('category_id')
-                ->constrained(Category::$table, Category::$primaryKey);
+                ->constrained('categories', 'category_id');
             $table->string('product_image', 255)
                 ->nullable();
             $table->decimal('purchase_price', 10, 2);
