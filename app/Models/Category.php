@@ -13,6 +13,6 @@ class Category extends Model
     public $primaryKey = 'category_id';
 
     protected $guarded = [
-        'category_name'
+        'category_id'
     ];
 }

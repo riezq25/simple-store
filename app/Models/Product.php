@@ -13,6 +13,6 @@ class Product extends Model
     public $primaryKey = 'product_id';
 
     protected $guarded = [
-        'category_name'
+        'product_id'
     ];
 }
