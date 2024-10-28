@@ -12,10 +12,10 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         CategoryFactory::new()
-            ->count(20)
+            ->count(30)
             ->has(
                 ProductFactory::new()
-                    ->count(rand(3, 20))
+                    ->count(rand(5, 30))
             )
             ->create();
     }
