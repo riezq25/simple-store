@@ -12,8 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_sales_view', function (Blueprint $table) {
-            DB::statement("
+        DB::statement("
             CREATE VIEW daily_sales_report AS
             SELECT
                 s.sale_id,
@@ -30,7 +29,6 @@ return new class extends Migration
             JOIN products p ON sd.product_id = p.product_id
             WHERE DATE(s.sale_date) = CURDATE()
         ");
-        });
     }
 
     /**
