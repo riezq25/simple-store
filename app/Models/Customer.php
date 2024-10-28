@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Product extends Model
+class Customer extends Model
 {
     use HasFactory;
 
-    public $table = 'products';
-    public $primaryKey = 'product_id';
+    public $table = 'customers';
+    public $primaryKey = 'customer_id';
 
     protected $guarded = [
-        'product_id'
+        'customer_id'
     ];
 
-    public function category(): BelongsTo
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+        return $this->belongsTo(City::class, 'city_code', 'city_code');
     }
 }
