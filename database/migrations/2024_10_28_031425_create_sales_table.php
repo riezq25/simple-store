@@ -14,11 +14,20 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id('sale_id');
+            $table->string('invoice_number', 20)
+                ->unique();
             $table->timestamp('sale_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->foreignId('customer_id')
                 ->constrained('customers', 'customer_id');
             $table->decimal('total_amount', 15, 2);
             $table->timestamps();
+
+            // add index
+            $table->index('invoice_number');
+            $table->index([
+                'sale_date',
+                'customer_id'
+            ]);
         });
     }
 

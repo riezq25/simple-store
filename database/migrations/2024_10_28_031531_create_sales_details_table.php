@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal('subtotals', 15, 2)
                 ->storedAs('unit_price * quantity');
             $table->timestamps();
+
+            $table->index('product_id');
         });
     }
 
