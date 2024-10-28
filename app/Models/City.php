@@ -20,4 +20,9 @@ class City extends Model
     {
         return $this->hasMany(Customer::class, 'city_code', 'city_code');
     }
+
+    public function suppliers(): HasMany
+    {
+        return $this->hasMany(Supplier::class, 'city_code', 'city_code');
+    }
 }

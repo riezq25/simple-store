@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id('customer_id');
-            $table->string('customer_name', 255);
-            $table->string('phone_number', 15);
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id('suplier_id');
+            $table->string('supplier_name', 255);
+            $table->string('contact_name', 255)
+                ->nullable();
+            $table->string('phone_number', 15)
+                ->nullable();
             $table->string('email', 100)
                 ->unique();
             $table->text('address')
                 ->nullable();
-            $table->date('birth_date');
             $table->char('city_code', 4);
             $table->foreign('city_code')
                 ->references('city_code')
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('suppliers');
     }
 };
