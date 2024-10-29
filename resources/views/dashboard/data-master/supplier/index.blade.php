@@ -60,6 +60,13 @@
 
             </form>
 
+            <a href="{{ route('supplier.create') }}" role="button" class="btn btn-primary mb-4">
+                <i class="fas fa-plus fa-fw me-2"></i>
+                <span>Tambah Supplier</span>
+            </a>
+
+            @include('layouts.partials.alert-message')
+
             <div class="table-responsive mb-4">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -90,7 +97,8 @@
                                             <i class="fas fa-edit fa-fw me-2"></i>
                                             <span>Ubah</span>
                                         </a>
-                                        <button onclick="deleteData('{{ route('supplier.destroy', $supplier->supplier_id) }}')"
+                                        <button
+                                            onclick="deleteData('{{ route('supplier.destroy', $supplier->supplier_id) }}')"
                                             type="button" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash fa-fw me-2"></i>
                                             <span>Hapus</span>

@@ -55,7 +55,6 @@
 
             @include('layouts.partials.alert-message')
 
-
             <div class="table-responsive mb-4">
                 <table class="table table-sm table-hover">
                     <thead>

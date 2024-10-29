@@ -64,43 +64,53 @@ class SupplierController extends Controller
         // judul halaman
         $data['title'] = 'Tambah Supplier';
 
+        $data['cities'] = City::orderBy('city_name', 'asc')
+            ->get([
+                'city_code',
+                'city_name'
+            ]);
+
         // menampilkan ke view
-        return view('dashboard.pengguna.admin.create', $data);
+        return view('dashboard.data-master.supplier.create', $data);
     }
 
     function store(Request $request)
     {
         // membuat rule validasi
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'supplier_name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:suppliers,email'],
+            'phone_number' => ['required', 'string', 'min:8', 'max:15'],
+            'city_code' => ['required', 'exists:cities,city_code'],
+            'address' => ['nullable', 'string', 'min:3'],
+        ];
+
+        $atributes = [
+            'supplier_name' => 'Nama Supplier',
+            'contact_name'  => 'Nama Kontak',
+            'phone_number'  => 'No HP',
+            'city_code' => 'Kota',
+            'address'   => 'Alamat',
         ];
 
         // menvalidasi input
         $validated = $request->validate(
-            $rules
+            $rules,
+            [],
+            $atributes
         );
 
         // transaction
         DB::beginTransaction();
 
-        // insert ke user
-        $user = User::create([
-            'name'  => $request['name'],
-            'email' => $request['email'],
-            'password'  => Hash::make($request['password'])
-        ]);
-
-        // tandai email sebagai teverifikasi
-        $user->markEmailAsVerified();
-
-        $user->assignRole('admin');
+        // insert ke Supplier
+        $supplier = Supplier::create($validated);
 
         DB::commit();
-        return redirect(route('admin.index'))
+        return redirect(route('supplier.index'))
             ->with([
-                'success'  => 'Berhasil menambahkan ' . $user->name . ' (' . $user->email . ')'
+                'success'  => 'Berhasil menambahkan ' . $supplier->supplier_name . ' (' . $supplier->email . ')'
             ]);
     }
 
