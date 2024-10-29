@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class SupplierController extends Controller
@@ -117,78 +118,88 @@ class SupplierController extends Controller
     function edit($id)
     {
         // mengambil data berdasarkan id
-        $user = User::findOrFail($id);
+        $supplier = Supplier::findOrFail($id);
 
         $data = [];
         // judul halaman
         $data['title'] = 'Ubah Supplier';
 
-        $data['user'] = $user;
+        $data['supplier'] = $supplier;
+        $data['cities'] = City::orderBy('city_name', 'asc')
+            ->get([
+                'city_code',
+                'city_name'
+            ]);
 
         // menampilkan ke view
-        return view('dashboard.pengguna.admin.edit', $data);
+        return view('dashboard.data-master.supplier.edit', $data);
     }
 
     function update(Request $request, $id)
     {
         // mengambil data berdasarkan id
-        $user = User::findOrFail($id);
-
+        $supplier = Supplier::findOrFail($id);
         // membuat rule validasi
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'supplier_name' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
-                'unique:users,email,' . $user->id
+                Rule::unique('suppliers', 'email')
+                ->where('supplier_id', $supplier->id)
             ],
-            'password' => ['nullable', 'confirmed', Password::defaults()],
+            'phone_number' => ['required', 'string', 'min:8', 'max:15'],
+            'city_code' => ['required', 'exists:cities,city_code'],
+            'address' => ['nullable', 'string', 'min:3'],
+        ];
+
+        $atributes = [
+            'supplier_name' => 'Nama Supplier',
+            'contact_name'  => 'Nama Kontak',
+            'phone_number'  => 'No HP',
+            'city_code' => 'Kota',
+            'address'   => 'Alamat',
         ];
 
         // menvalidasi input
         $validated = $request->validate(
-            $rules
+            $rules,
+            [],
+            $atributes
         );
 
         // transaction
         DB::beginTransaction();
 
-        // update user
-        $updateData = [
-            'name'  => $request['name'],
-            'email' => $request['email']
-        ];
+        // update supplier
 
-        if ($validated['password']) {
-            $updateData['password'] = Hash::make($validated['password']);
-        }
-
-        $user->update($updateData);
+        $supplier->update($validated);
 
         DB::commit();
-        return redirect(route('admin.index'))
+        return redirect(route('supplier.index'))
             ->with([
-                'success'  => 'Berhasil mengubah ' . $user->name . ' (' . $user->email . ')'
+                'success'  => 'Berhasil mengubah ' . $supplier->supplier_name . ' (' . $supplier->email . ')'
             ]);
     }
 
     function destroy($id)
     {
         // mengambil data berdasarkan id
-        $user = User::findOrFail($id);
+        $supplier = Supplier::findOrFail($id);
 
         DB::beginTransaction();
 
         // menghapus data
-        $user->delete();
+        $supplier->delete();
 
         DB::commit();
-        return redirect(route('admin.index'))
+        return redirect(route('supplier.index'))
             ->with([
-                'success'  => 'Berhasil menghapus ' . $user->name . ' (' . $user->email . ')'
+                'success'  => 'Berhasil menghapus ' . $supplier->supplier_name . ' (' . $supplier->email . ')'
             ]);
     }
 }

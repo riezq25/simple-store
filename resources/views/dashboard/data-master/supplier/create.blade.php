@@ -65,7 +65,7 @@
                             <select id="city_code" name="city_code" class="form-select">
                                 <option selected value="all">Semua Kota</option>
                                 @foreach ($cities as $city)
-                                    <option @selected(request()->city == $city->city_code) value="{{ $city->city_code }}">
+                                    <option @selected(old('city_code') == $city->city_code) value="{{ $city->city_code }}">
                                         {{ $city->city_name }}</option>
                                 @endforeach
                             </select>
@@ -79,9 +79,7 @@
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="address" name="address" rows="3">
-                                {{ old('address') }}
-                            </textarea>
+                            <textarea class="form-control" id="address" name="address" rows="3">{{ old('address') }}</textarea>
 
                             @error('address')
                                 <div class="text-danger mt-2">{{ $message }}</div>
