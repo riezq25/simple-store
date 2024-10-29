@@ -34,6 +34,7 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('/') }}vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="{{ asset('vendor/libs/sweet-alert/sweetalert2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/libs/fontawesome-free-6.6.0-web/css/all.min.css') }}" />
 
     <!-- Page CSS -->
 
@@ -119,6 +120,7 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
+    <script src="{{ asset('vendor/libs/fontawesome-free-6.6.0-web/js/all.min.js') }}"></script>
     <script src="{{ asset('vendor/libs/sweet-alert/sweetalert2.all.min.js') }}"></script>
 
     <!-- Main JS -->

@@ -23,7 +23,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengguna/customer', [CustomerController::class, 'index'])
         ->name('customer.index');
 
-
     // b. admin
 
     // profile
