@@ -27,11 +27,28 @@ class CustomerController extends Controller
 
 
         // mengambil data customer
-        $data['customers'] = Customer::orderBy('customer_name', 'asc')
+        $customers = Customer::orderBy('customer_name', 'asc');
+
+        $customers = $customers
+            ->when(request()->search, function ($q) {
+                $q->orWhere('customer_name', 'like', '%' . request()->search . '%')
+                    ->orWhere('email', 'like', '%' . request()->search . '%')
+                    ->orWhere('phone_number', 'like', '%' . request()->search . '%');
+            });
+
+        $customers = $customers
+            ->when(request()->city && request()->city != 'all', function ($q) {
+                $q->orWhere('city_code', request()->city);
+            });
+
+        $customers =  $customers
             ->with([
                 'city'
             ])
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
+        // dd($customers);
+        $data['customers'] = $customers;
 
         // menampilkan ke view
         return view('dashboard.pengguna.customer.index', $data);
