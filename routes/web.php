@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ Route::middleware('auth')->group(function () {
 
     // Pengguna
     // a. customer
+    Route::get('/pengguna/customer', [CustomerController::class, 'index'])
+        ->name('customer.index');
+
+
     // b. admin
 
     // profile
