@@ -14,9 +14,7 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <li class="menu-item @if (url()->full() == route('dashboard'))
-            active
-        @endif">
+        <li class="menu-item @if (url()->full() == route('dashboard')) active @endif">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate">Dashboard</div>
@@ -30,49 +28,50 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-store"></i>
-                <div class="text-truncate">Data Master</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/landing-page.html"
-                        class="menu-link" target="_blank">
-                        <div class="text-truncate">Kategori</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/pricing-page.html"
-                        class="menu-link" target="_blank">
-                        <div class="text-truncate">Produk</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/payment-page.html"
-                        class="menu-link" target="_blank">
-                        <div class="text-truncate">Supplier</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        @hasanyrole(['admin'])
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-store"></i>
+                    <div class="text-truncate">Data Master</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/landing-page.html"
+                            class="menu-link" target="_blank">
+                            <div class="text-truncate">Kategori</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/pricing-page.html"
+                            class="menu-link" target="_blank">
+                            <div class="text-truncate">Produk</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/payment-page.html"
+                            class="menu-link" target="_blank">
+                            <div class="text-truncate">Supplier</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-        <!-- Apps & Pages -->
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pengguna</span>
-        </li>
-        <li class="menu-item">
-            <a href="#" target="_blank" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div class="text-truncate">Customer</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="#" target="_blank" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user-check"></i>
-                <div class="text-truncate">Admin</div>
-            </a>
-        </li>
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Pengguna</span>
+            </li>
+            <li class="menu-item">
+                <a href="#" target="_blank" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div class="text-truncate">Customer</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" target="_blank" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user-check"></i>
+                    <div class="text-truncate">Admin</div>
+                </a>
+            </li>
+        @endhasanyrole
 
         <!-- Misc -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
