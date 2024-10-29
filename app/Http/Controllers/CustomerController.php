@@ -25,34 +25,36 @@ class CustomerController extends Controller
                 'city_name'
             ]);
 
-
-        // mengambil data customer
-        $customers = Customer::orderBy('customer_name', 'asc');
-
-        $customers = $customers
+        // mengambil data customer dengan kondisi pencarian dan filter kota
+        $customers = Customer::query()
+             ->orderBy(request()->get('sort_column', 'customer_name'), request()->get('sort_order', 'asc'))
             ->when(request()->search, function ($q) {
                 $q->orWhere('customer_name', 'like', '%' . request()->search . '%')
                     ->orWhere('email', 'like', '%' . request()->search . '%')
                     ->orWhere('phone_number', 'like', '%' . request()->search . '%');
-            });
-
-        $customers = $customers
+            })
             ->when(request()->city && request()->city != 'all', function ($q) {
-                $q->orWhere('city_code', request()->city);
-            });
-
-        $customers =  $customers
-            ->with([
-                'city'
-            ])
+                $q->where('city_code', request()->city);
+            })
+            ->with(['city'])
             ->paginate(10)
             ->withQueryString();
-        // dd($customers);
+
         $data['customers'] = $customers;
+
+        // sorted column
+        $data['sortColumns'] = [
+            'customer_name' => 'Nama',
+            'birth_date'    => 'Tanggal Lahir',
+            'email' => 'Email',
+            'phone_number'  => 'No HP',
+        ];
 
         // menampilkan ke view
         return view('dashboard.pengguna.customer.index', $data);
     }
+
+
 
     function create()
     {
