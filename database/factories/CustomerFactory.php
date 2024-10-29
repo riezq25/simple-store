@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\City;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CustomerFactory extends Factory
@@ -12,15 +13,14 @@ class CustomerFactory extends Factory
 
     public function definition(): array
     {
+        $user = User::factory()->create();
+        $user->assignRole('customer');
         return [
-            'customer_name' => fake()
-                ->unique()
-                ->name(),
+            'user_id'       => $user->id,
+            'customer_name' => $user->name,
             'phone_number'  => fake()
                 ->numerify('628#########'),
-            'email'         => fake()
-                ->unique()
-                ->email(),
+            'email'         => $user->email,
             'address'       => fake()->address(),
             'birth_date'    => fake()->date(),
             'city_code'     => City::inRandomOrder()
