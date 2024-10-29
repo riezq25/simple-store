@@ -159,6 +159,37 @@
 
 
         }
+
+        function deleteData(route) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Anda akan menghapus data!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal",
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "delete",
+                        url: route,
+                        data: {
+                            _token: csrfToken(),
+                        },
+                        dataType: false,
+                        success: function(response) {
+                            window.location.reload();
+                        },
+                        error:function(xhr){
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+
+
+        }
     </script>
 
     @stack('js')

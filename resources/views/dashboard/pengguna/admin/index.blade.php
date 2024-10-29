@@ -75,11 +75,13 @@
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     <div class="btn-group btn-sm" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('admin.edit', $user->id) }}" type="button"
+                                            class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit fa-fw me-2"></i>
                                             <span>Ubah</span>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-danger">
+                                        </a>
+                                        <button onclick="deleteData('{{ route('admin.destroy', $user->id) }}')" type="button"
+                                            class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash fa-fw me-2"></i>
                                             <span>Hapus</span>
                                         </button>

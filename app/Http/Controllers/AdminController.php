@@ -50,7 +50,6 @@ class AdminController extends Controller
         return view('dashboard.pengguna.admin.index', $data);
     }
 
-
     function create()
     {
         $data = [];
@@ -93,7 +92,85 @@ class AdminController extends Controller
         DB::commit();
         return redirect(route('admin.index'))
             ->with([
-                'success'  => 'Berhasil menambahkan data admin.'
+                'success'  => 'Berhasil menambahkan ' . $user->name . ' (' . $user->email . ')'
+            ]);
+    }
+
+    function edit($id)
+    {
+        // mengambil data berdasarkan id
+        $user = User::findOrFail($id);
+
+        $data = [];
+        // judul halaman
+        $data['title'] = 'Ubah Admin';
+
+        $data['user'] = $user;
+
+        // menampilkan ke view
+        return view('dashboard.pengguna.admin.edit', $data);
+    }
+
+    function update(Request $request, $id)
+    {
+        // mengambil data berdasarkan id
+        $user = User::findOrFail($id);
+
+        // membuat rule validasi
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                'unique:users,email,' . $user->id
+            ],
+            'password' => ['nullable', 'confirmed', Password::defaults()],
+        ];
+
+        // menvalidasi input
+        $validated = $request->validate(
+            $rules
+        );
+
+        // transaction
+        DB::beginTransaction();
+
+        // update user
+        $updateData = [
+            'name'  => $request['name'],
+            'email' => $request['email']
+        ];
+
+        if ($validated['password']) {
+            $updateData['password'] = Hash::make($validated['password']);
+        }
+
+        $user->update($updateData);
+
+        DB::commit();
+        return redirect(route('admin.index'))
+            ->with([
+                'success'  => 'Berhasil mengubah ' . $user->name . ' (' . $user->email . ')'
+            ]);
+    }
+
+    function destroy($id)
+    {
+        // mengambil data berdasarkan id
+        $user = User::findOrFail($id);
+
+        DB::beginTransaction();
+
+        // menghapus data
+        $user->delete();
+
+        DB::commit();
+        return redirect(route('admin.index'))
+            ->with([
+                'success'  => 'Berhasil menghapus ' . $user->name . ' (' . $user->email . ')'
             ]);
     }
 }
