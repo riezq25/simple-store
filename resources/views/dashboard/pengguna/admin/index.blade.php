@@ -48,6 +48,14 @@
 
             </form>
 
+            <a href="{{ route('admin.create') }}" role="button" class="btn btn-primary mb-4">
+                <i class="fas fa-plus fa-fw me-2"></i>
+                <span>Tambah Admin</span>
+            </a>
+
+            @include('layouts.partials.alert-message')
+
+
             <div class="table-responsive mb-4">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -55,6 +63,7 @@
                             <th width="5%">#</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th width="10%">Action</th>
                         </tr>
                     </thead>
 
@@ -64,6 +73,18 @@
                                 <td>{{ ($users->currentPage() - 1) * $users->perPage() + $i + 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>
+                                    <div class="btn-group btn-sm" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit fa-fw me-2"></i>
+                                            <span>Ubah</span>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash fa-fw me-2"></i>
+                                            <span>Hapus</span>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
 

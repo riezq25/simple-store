@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
@@ -53,69 +54,25 @@ class AdminController extends Controller
     function create()
     {
         $data = [];
-
         // judul halaman
-        $data['title'] = 'Tambah Customer';
-
-        // mengambil data kota
-        $data['cities'] = City::orderBy('city_name', 'asc')
-            ->get([
-                'city_code',
-                'city_name'
-            ]);
+        $data['title'] = 'Tambah Admin';
 
         // menampilkan ke view
-        return view('dashboard.pengguna.customer.create', $data);
+        return view('dashboard.pengguna.admin.create', $data);
     }
 
     function store(Request $request)
     {
         // membuat rule validasi
         $rules = [
-            'name' => [
-                'required',
-                'min:3',
-                'max:255'
-            ],
-            'phone_number'  => [
-                'required',
-                'min:10',
-                'max:15'
-            ],
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email'
-            ],
-            'birth_date'    => [
-                'required',
-                'date'
-            ],
-            'city_code' => [
-                'required',
-                'exists:cities,city_code'
-            ],
-            'address'   => [
-                'nullabled',
-                'min:3'
-            ]
-        ];
-
-        // membuat nama atribute
-        $atributes = [
-            'name' => 'Nama',
-            'phone_number'  => 'No HP',
-            'email' => 'Email',
-            'birth_date'    => 'Tanggal Lahir',
-            'city_code' => 'Kota',
-            'address'   => 'Alamat',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
 
         // menvalidasi input
         $validated = $request->validate(
-            $rules,
-            [],
-            $atributes
+            $rules
         );
 
         // transaction
@@ -123,17 +80,20 @@ class AdminController extends Controller
 
         // insert ke user
         $user = User::create([
-            'name'  => 'Admin',
-            'email' => 'admin@amdacademy.id',
-            'password'  => Hash::make('password')
+            'name'  => $request['name'],
+            'email' => $request['email'],
+            'password'  => Hash::make($request['password'])
         ]);
 
         // tandai email sebagai teverifikasi
         $user->markEmailAsVerified();
 
         $user->assignRole('admin');
-        // insewrt ke customer
 
-
+        DB::commit();
+        return redirect(route('admin.index'))
+            ->with([
+                'success'  => 'Berhasil menambahkan data admin.'
+            ]);
     }
 }

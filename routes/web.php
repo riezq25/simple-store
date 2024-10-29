@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
         // b. admin
         Route::get('/pengguna/admin', [AdminController::class, 'index'])
             ->name('admin.index');
+        Route::get('/pengguna/admin/create', [AdminController::class, 'create'])
+            ->name('admin.create');
+        Route::post('/pengguna/admin/store', [AdminController::class, 'store'])
+            ->name('admin.store');
     });
 
 
