@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -13,17 +14,24 @@ Route::middleware('auth')->group(function () {
 
     // Transaksi
 
-    // Data Master
-    // a. Kategori
-    // b. Produk
-    // c. Supplier
 
-    // Pengguna
-    // a. customer
-    Route::get('/pengguna/customer', [CustomerController::class, 'index'])
-        ->name('customer.index');
+    // admin only
+    Route::middleware('role:admin')->group(function () {
+        // Data Master
+        // a. Kategori
+        // b. Produk
+        // c. Supplier
 
-    // b. admin
+        // Pengguna
+        // a. customer
+        Route::get('/pengguna/customer', [CustomerController::class, 'index'])
+            ->name('customer.index');
+
+        // b. admin
+        Route::get('/pengguna/admin', [AdminController::class, 'index'])
+            ->name('admin.index');
+    });
+
 
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

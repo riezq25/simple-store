@@ -66,7 +66,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="{{ route('admin.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user-check"></i>
                     <div class="text-truncate">Admin</div>
                 </a>
