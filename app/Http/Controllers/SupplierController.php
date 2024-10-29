@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Customer;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
-class AdminController extends Controller
+class SupplierController extends Controller
 {
     function index()
     {
         $data = [];
 
         // judul halaman
-        $data['title'] = 'Data Admin';
+        $data['title'] = 'Data Suppier';
 
         // mengambil data kota
         $data['cities'] = City::orderBy('city_name', 'asc')
@@ -27,36 +28,41 @@ class AdminController extends Controller
             ]);
 
         // mengambil data customer dengan kondisi pencarian dan filter kota
-        $users = User::whereHas('roles', function ($q) {
-            $q->where('name', 'admin');
-        })
-            ->orderBy(request()->get('sort_column', 'name'), request()->get('sort_direction', 'asc'))
+        $suppliers = Supplier::orderBy(request()->get('sort_column', 'supplier_name'), request()->get('sort_direction', 'asc'))
             ->when(request()->search, function ($q) {
                 $q->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . request()->search . '%')
-                        ->orWhere('email', 'like', '%' . request()->search . '%');
+                    $q->orWhere('supplier_name', 'like', '%' . request()->search . '%')
+                        ->orWhere('email', 'like', '%' . request()->search . '%')
+                        ->orWhere('contact_name', 'like', '%' . request()->search . '%')
+                        ->orWhere('phone_number', 'like', '%' . request()->search . '%');
                 });
             })
+            ->when(request()->city && request()->city != 'all', function ($q) {
+                $q->where('city_code', request()->city);
+            })
+            ->with(['city'])
             ->paginate(10)
             ->withQueryString();
 
-        $data['users'] = $users;
+        $data['suppliers'] = $suppliers;
 
         // sorted column
         $data['sortColumns'] = [
-            'name' => 'Nama',
+            'supplier_name' => 'Nama Supplier',
+            'contact_name' => 'Nama Kontak',
             'email' => 'Email',
+            'phone_number'  => 'No HP',
         ];
 
         // menampilkan ke view
-        return view('dashboard.pengguna.admin.index', $data);
+        return view('dashboard.data-master.supplier.index', $data);
     }
 
     function create()
     {
         $data = [];
         // judul halaman
-        $data['title'] = 'Tambah Admin';
+        $data['title'] = 'Tambah Supplier';
 
         // menampilkan ke view
         return view('dashboard.pengguna.admin.create', $data);
@@ -105,7 +111,7 @@ class AdminController extends Controller
 
         $data = [];
         // judul halaman
-        $data['title'] = 'Ubah Admin';
+        $data['title'] = 'Ubah Supplier';
 
         $data['user'] = $user;
 

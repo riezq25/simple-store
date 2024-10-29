@@ -47,8 +47,8 @@
                             <div class="text-truncate">Produk</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/payment-page.html"
+                    <li class="menu-item @if (url()->full() == route('supplier.index')) active @endif">
+                        <a href="{{ route('supplier.index') }}"
                             class="menu-link">
                             <div class="text-truncate">Supplier</div>
                         </a>

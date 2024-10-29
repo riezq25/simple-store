@@ -28,9 +28,11 @@ class CustomerController extends Controller
         // mengambil data customer dengan kondisi pencarian dan filter kota
         $customers = Customer::orderBy(request()->get('sort_column', 'customer_name'), request()->get('sort_direction', 'asc'))
             ->when(request()->search, function ($q) {
-                $q->orWhere('customer_name', 'like', '%' . request()->search . '%')
-                    ->orWhere('email', 'like', '%' . request()->search . '%')
-                    ->orWhere('phone_number', 'like', '%' . request()->search . '%');
+                $q->where(function ($q) {
+                    $q->orWhere('customer_name', 'like', '%' . request()->search . '%')
+                        ->orWhere('email', 'like', '%' . request()->search . '%')
+                        ->orWhere('phone_number', 'like', '%' . request()->search . '%');
+                });
             })
             ->when(request()->city && request()->city != 'all', function ($q) {
                 $q->where('city_code', request()->city);
