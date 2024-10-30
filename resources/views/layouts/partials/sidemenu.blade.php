@@ -23,7 +23,7 @@
 
         @hasanyrole(['customer'])
             <li class="menu-item">
-                <a href="{{ route('dashboard') }}" class="menu-link">
+                <a href="#" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-cart-alt"></i>
                     <div class="text-truncate">Belanja</div>
                 </a>
@@ -31,7 +31,7 @@
         @endhasanyrole
 
         <li class="menu-item">
-            <a href="{{ route('dashboard') }}" class="menu-link">
+            <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-list-check"></i>
                 <div class="text-truncate">Riwayat Transaksi</div>
             </a>
@@ -45,19 +45,17 @@
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/landing-page.html"
-                            class="menu-link">
+                        <a href="#" class="menu-link">
                             <div class="text-truncate">Kategori</div>
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/pricing-page.html"
-                            class="menu-link">
+                        <a href="#" class="menu-link">
                             <div class="text-truncate">Produk</div>
                         </a>
                     </li>
-                    <li class="menu-item @if (url()->full() == route('supplier.index')) active @endif">
-                        <a href="{{ route('supplier.index') }}" class="menu-link">
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
                             <div class="text-truncate">Supplier</div>
                         </a>
                     </li>
@@ -67,14 +65,14 @@
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Pengguna</span>
             </li>
-            <li class="menu-item @if (url()->full() == route('customer.index')) active @endif">
-                <a href="{{ route('customer.index') }}" class="menu-link">
+            <li class="menu-item">
+                <a href="#" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div class="text-truncate">Customer</div>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ route('admin.index') }}" class="menu-link">
+                <a href="#" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user-check"></i>
                     <div class="text-truncate">Admin</div>
                 </a>
