@@ -21,10 +21,19 @@
             </a>
         </li>
 
+        @hasanyrole(['customer'])
+            <li class="menu-item">
+                <a href="{{ route('dashboard') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-cart-alt"></i>
+                    <div class="text-truncate">Belanja</div>
+                </a>
+            </li>
+        @endhasanyrole
+
         <li class="menu-item">
             <a href="{{ route('dashboard') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cart-alt"></i>
-                <div class="text-truncate">Transaksi</div>
+                <i class="menu-icon tf-icons bx bx-list-check"></i>
+                <div class="text-truncate">Riwayat Transaksi</div>
             </a>
         </li>
 
@@ -48,8 +57,7 @@
                         </a>
                     </li>
                     <li class="menu-item @if (url()->full() == route('supplier.index')) active @endif">
-                        <a href="{{ route('supplier.index') }}"
-                            class="menu-link">
+                        <a href="{{ route('supplier.index') }}" class="menu-link">
                             <div class="text-truncate">Supplier</div>
                         </a>
                     </li>
