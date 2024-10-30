@@ -1,11 +1,26 @@
 1. Instalasi:
     a. Fresh
     b. Clone repo
-2. Migration dan Model
+2. Migration dan Model: cara mnegakses database: ORM, Database Builder, Raw Query
 3. Index
-4. Store Procedure
-5. Trigger
-6. Function
-7. Agregration table
-8. Route, Controller, View
-    a. Halaman
+4. View
+5. Store Procedure
+6. Trigger
+7. Function
+8. Agregration table
+9. Route, Controller, View
+    a. Membuat Controller
+    b. Membuat Halaman datatable
+    c. Membuat fitur filter pencarian
+    d. Membuat fitur sorting
+    e. Membuat halaman tambah
+    f. Membuat fungsi tambah data
+    g. membuat halaman edit
+    h. membuat fungsi update
+    i. membuat fungsi hapus
+
+
+Referensi:
+Laravel (https://laravel.com/docs/11.x)
+Template - Sneat (https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/)
+Icon - BoxIcon (https://boxicons.com/)
