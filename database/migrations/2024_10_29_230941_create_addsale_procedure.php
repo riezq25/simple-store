@@ -55,6 +55,6 @@ END;'
     {
         DB::unprepared(
             'DROP PROCEDURE IF EXISTS AddSale;'
-            );
+        );
     }
 };
