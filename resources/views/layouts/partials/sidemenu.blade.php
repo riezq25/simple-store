@@ -45,7 +45,7 @@
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/front-pages/landing-page.html"
+                        <a href="{{ route('category.index') }}"
                             class="menu-link">
                             <div class="text-truncate">Kategori</div>
                         </a>

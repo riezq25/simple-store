@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +21,20 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin')->group(function () {
         // Data Master
         // a. Kategori
+        Route::get('/data-master/category', [CategoryController::class, 'index'])
+            ->name('category.index');
+        Route::get('/data-master/category/create', [CategoryController::class, 'create'])
+            ->name('category.create');
+        Route::post('/data-master/category/store', [CategoryController::class, 'store'])
+            ->name('category.store');
+        Route::get('/data-master/category/{id}/edit', [CategoryController::class, 'edit'])
+            ->name('category.edit');
+        Route::put('/data-master/category/{id}/update', [CategoryController::class, 'update'])
+            ->name('category.update');
+        Route::delete('/data-master/category/{id}', [CategoryController::class, 'destroy'])
+            ->name('category.destroy');
+
+
         // b. Produk
 
         // c. Supplier

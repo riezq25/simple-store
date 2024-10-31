@@ -13,6 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared(
+            'DROP PROCEDURE IF EXISTS AddSale;'
+        );
+        DB::unprepared(
             'CREATE PROCEDURE AddSale(
     IN customerId INT,
     IN productId INT,
